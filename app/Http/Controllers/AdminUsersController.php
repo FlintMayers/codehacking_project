@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Role;
+use App\Http\Requests\UsersRequest;
 
 class AdminUsersController extends Controller
 {
@@ -14,7 +17,8 @@ class AdminUsersController extends Controller
     public function index()
     {
         //
-        return view('admin.users.index');
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -25,7 +29,9 @@ class AdminUsersController extends Controller
     public function create()
     {
         //
-        return view('admin.users.create');
+        $roles = Role::pluck('name', 'id')->all();
+    	
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -34,9 +40,31 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+    	
+//     	$user = new User();
+//     	$user->name = $request->name;
+//     	$user->email = $request->email;
+//     	$user->role_id = $request->role_id;
+//     	$user->is_active = $request->is_active;
+//     	$user->photo_id = $request->photo_id;
+//     	$user->password = $request->password;
+//     	$user->save();
+    	
+//     	return $request->all();
+
+    	
+//     	User::create($request->all());
+    	
+    	$input = $request->all();
+    	
+    	if($request->file('photo_id')) {
+    		return "photo exists";
+    	}
+    	
+//     	return redirect('/admin/users');
+      
     }
 
     /**
